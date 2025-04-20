@@ -31,27 +31,27 @@ const HomeComponent = () => {
         return snake.some((item) => item.x === newFood.x && item.y === newFood.y) ? generateFood() : newFood;
     }
 
-    const moveSnake = ()=>{
-        if(gameOver) return;
+const moveSnake = ()=>{
+    if(gameOver) return;
 
-        const head = {...snake[0]};
+    const head = {...snake[0]};
 
-        switch (direction) {
-            case "UP":
-                head.y--;
-                break;
-            case "DOWN":
-                head.y++;
-                break;
-            case "LEFT":
-                head.X--;
-                break;
-            case "RIGHT":
-                head.X++;
-                break;        
-            default:
-                break;
-        }
+    switch (direction) {
+        case "UP":
+            head.y--;
+            break;
+        case "DOWN":
+            head.y++;
+            break;
+        case "LEFT":
+            head.X--;
+            break;
+        case "RIGHT":
+            head.X++;
+            break;        
+        default:
+            break;
+    }
 
     if( head.x < 0 ||
         head.x >= GRID_SIZE ||
@@ -59,7 +59,7 @@ const HomeComponent = () => {
         head.y >= GRID_SIZE ||
         snake.some((item)=>item.x === head.x && item.y === head.y)
     ){
-            setGameOver(true);
+            // setGameOver(true);
             return;
     }
 
@@ -112,17 +112,16 @@ const renderGrid = () => {
             const isSnake = snake.some((item)=> item.x === j && item.y === i);
             const isFood = food.x === j && food.y === i;
             grid.push(
-                <div key={`${i}-${j}`} className='`cell ${i}'>
+                <div key={`${i}-${j}`} className='`cell ${isSnake ? "snake" : ""} ${isFood ? "food" : ""}'>
 
                 </div>
             )
         }
-
     }
+    return renderGrid
 }
-// read up to 1:20:20
 
-
+// 01:25:00
 
 
     return (
@@ -130,11 +129,16 @@ const renderGrid = () => {
             <div className="game-container">
                 <div className="score">Score: 5</div>
                 <div className="game-board"></div>
-                <div className="game-over">
-                    <h2 className='font-bold text-3xl capitalize'>Game Over</h2>
-                    <p>Your Score: 5</p>
-                    <button className='restart-button'>Restart</button>
-                </div>
+                {
+                    gameOver ?
+                    <div className="game-over">
+                        <h2 className='font-bold text-3xl capitalize'>Game Over</h2>
+                        <p>Your Score: 5</p>
+                        <button className='restart-button'>Restart</button>
+                    </div>
+                    : ""
+
+                }
             </div>
         </>
     );
