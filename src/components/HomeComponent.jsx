@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const HomeComponent = () => {
 
@@ -28,28 +28,99 @@ const HomeComponent = () => {
             x : Math.floor(Math.random() * GRID_SIZE),
             y : Math.floor(Math.random() * GRID_SIZE),
         }
-        return snake.some((item) => item.x === newFood.x && item.y === newFood.y)
+        return snake.some((item) => item.x === newFood.x && item.y === newFood.y) ? generateFood() : newFood;
     }
 
+    const moveSnake = ()=>{
+        if(gameOver) return;
 
+        const head = {...snake[0]};
 
+        switch (direction) {
+            case "UP":
+                head.y--;
+                break;
+            case "DOWN":
+                head.y++;
+                break;
+            case "LEFT":
+                head.X--;
+                break;
+            case "RIGHT":
+                head.X++;
+                break;        
+            default:
+                break;
+        }
 
+    if( head.x < 0 ||
+        head.x >= GRID_SIZE ||
+        head.y < 0 ||
+        head.y >= GRID_SIZE ||
+        snake.some((item)=>item.x === head.x && item.y === head.y)
+    ){
+            setGameOver(true);
+            return;
+    }
 
+    const newSnake = [head, ...snake];
+    if(head.x === food.x && head.y === food.y){
+        setScore(score + 1);
+        setFood(generateFood());
+    }else{
+        newSnake.pop();
+    }
+}
 
+useEffect(()=>{
+    const handleKeyPress = (e) => {
+        switch (e.key) {
+            case "ArrowUp":
+                if( direction !== "DOWN") setDirection("UP")
+                break;
+            case "ArrowDown":
+                if( direction !== "UP") setDirection("DOWN")
+                break;
+            case "ArrowLeft":
+                if( direction !== "RIGHT") setDirection("LEFT")
+                break;
+            case "ArrowRight":
+                if( direction !== "LEFT") setDirection("RIGHT")
+                break;
+        
+            default:
+                break;
+        }
+    }
+    window.addEventListener("keydown",handleKeyPress)
+    return () => {
+        window.removeEventListener("keydown",handleKeyPress)
+    };
+},[direction])
 
+useEffect(() => {
+    const gameLoop = setInterval(moveSnake, 100)
+    return () => {
+        clearInterval(gameLoop);
+    };
+},[snake, food, direction, gameOver])
 
+const renderGrid = () => {
+    const grid = [];
+    for( let i = 0; i < GRID_SIZE; i++){
+        for( let j =0; j < GRID_SIZE; j++){
+            const isSnake = snake.some((item)=> item.x === j && item.y === i);
+            const isFood = food.x === j && food.y === i;
+            grid.push(
+                <div key={`${i}-${j}`} className='`cell ${i}'>
 
+                </div>
+            )
+        }
 
-
-
-
-
-
-
-
-
-
-
+    }
+}
+// read up to 1:20:20
 
 
 
