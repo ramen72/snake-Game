@@ -112,13 +112,13 @@ const renderGrid = () => {
             const isSnake = snake.some((item)=> item.x === j && item.y === i);
             const isFood = food.x === j && food.y === i;
             grid.push(
-                <div key={`${i}-${j}`} className='`cell ${isSnake ? "snake" : ""} ${isFood ? "food" : ""}'>
+                <div key={`${i}-${j}`} className={`cell ${isSnake ? "snake" : ""} ${isFood ? "food" : ""}`}>
 
                 </div>
             )
         }
     }
-    return renderGrid
+    return grid;
 }
 
 // 01:25:00
@@ -128,7 +128,11 @@ const renderGrid = () => {
         <>
             <div className="game-container">
                 <div className="score">Score: 5</div>
-                <div className="game-board"></div>
+                <div className="game-board" style={{ gridTemplateColumns: `repeat(${GRID_SIZE}, ${CELL_SIZE}px)`, width: `${GRID_SIZE * CELL_SIZE}px`, height: `${GRID_SIZE * CELL_SIZE}px`}}>
+                    {
+                        renderGrid()
+                    }
+                </div>
                 {
                     gameOver ?
                     <div className="game-over">
@@ -137,7 +141,6 @@ const renderGrid = () => {
                         <button className='restart-button'>Restart</button>
                     </div>
                     : ""
-
                 }
             </div>
         </>
