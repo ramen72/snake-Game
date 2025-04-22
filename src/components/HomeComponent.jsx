@@ -98,7 +98,6 @@ const HomeComponent = () => {
                 case "ArrowRight":
                     if( direction !== "LEFT") setDirection("RIGHT")
                     break;
-            
                 default:
                     break;
             }
@@ -106,7 +105,7 @@ const HomeComponent = () => {
         }
         window.addEventListener("keydown",handleKeyPress)
         return () => {
-            window.removeEventListener("keydown",handleKeyPress)
+            window.removeEventListener("keyup",handleKeyPress)
         };
     },[direction])
 
@@ -159,7 +158,6 @@ const HomeComponent = () => {
                     <button className='pauseBtn' onClick={()=>resumeGame()}>Resume</button>
                     :
                     <button className='pauseBtn' onClick={()=>pauseGame()}>Pause</button>
-
                 }
                 {
                     gameOver ?
