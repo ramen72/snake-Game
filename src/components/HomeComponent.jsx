@@ -23,6 +23,7 @@ const HomeComponent = () => {
     const [ score, setScore] = useState(0);
     const [ gameOver, setGameOver] = useState(false);
     const [ gamePause, setGamePause] = useState(false);
+    const [ speed, setSpeed] = useState(200);
 
     const generateFood = ()=>{
         const newFood = {
@@ -60,13 +61,21 @@ const HomeComponent = () => {
             head.y >= GRID_SIZE ||
             snake.some((item)=>item.x === head.x && item.y === head.y)
         ){
-                // setGameOver(true);
+                setGameOver(true);
                 return;
         }
 
         const newSnake = [head, ...snake]; 
         if(head.x === food.x && head.y === food.y){
             setScore(score + 1);
+            if( score >= 300){
+                setSpeed( 30)
+            }else if( speed <= 40){
+                setSpeed( 40)
+            }else{
+                setSpeed( speed - score)
+            }
+            console.log(speed)
             setFood(generateFood());
         }else{
             newSnake.pop();
@@ -93,6 +102,7 @@ const HomeComponent = () => {
                 default:
                     break;
             }
+            console.log(speed)
         }
         window.addEventListener("keydown",handleKeyPress)
         return () => {
@@ -101,7 +111,7 @@ const HomeComponent = () => {
     },[direction])
 
     useEffect(() => {
-        const gameLoop = setInterval(moveSnake, 200)
+        const gameLoop = setInterval(moveSnake, speed)
         return () => {
             clearInterval(gameLoop);
         };
@@ -114,9 +124,7 @@ const HomeComponent = () => {
                 const isSnake = snake.some((item)=> item.x === j && item.y === i);
                 const isFood = food.x === j && food.y === i;
                 grid.push(
-                    <div key={`${i}-${j}`} className={`cell ${isSnake ? "snake" : ""} ${isFood ? "food" : ""}`}>
-
-                    </div>
+                    <div key={`${i}-${j}`} className={`cell ${isSnake ? "snake" : ""} ${isFood ? "food" : ""}`}></div>
                 )
             }
         }
