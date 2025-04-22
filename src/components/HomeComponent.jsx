@@ -59,7 +59,7 @@ const moveSnake = ()=>{
         head.y >= GRID_SIZE ||
         snake.some((item)=>item.x === head.x && item.y === head.y)
     ){
-            setGameOver(true);
+            // setGameOver(true);
             return;
     }
 
@@ -138,6 +138,7 @@ let resetGame = () => {
             <div className="game-container">
                 <div className="score">Score: 5</div>
                 <div className="game-board overflow-hidden rounded-md" style={{ gridTemplateColumns: `repeat(${GRID_SIZE}, ${CELL_SIZE}px)`, width: `${GRID_SIZE * CELL_SIZE + 6}px`, height: `${GRID_SIZE * CELL_SIZE  + 5}px`}}>
+                    <div className="food"></div>
                     {
                         renderGrid()
                     }

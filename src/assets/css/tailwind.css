@@ -57,6 +57,8 @@ body{
     -webkit-animation: pulse 1.5s infinite;
 }
 .food{
+    width: 20px;
+    height: 20px;
     background: #ff0066;
     border-radius: 50%;
     -webkit-border-radius: 50%;
