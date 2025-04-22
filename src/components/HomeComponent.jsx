@@ -119,7 +119,7 @@ const HomeComponent = () => {
     const renderGrid = () => {
         const grid = [];
         for( let i = 0; i < GRID_SIZE; i++){
-            for( let j =0; j < GRID_SIZE; j++){
+            for( let j = 0; j < GRID_SIZE; j++){
                 const isSnake = snake.some((item)=> item.x === j && item.y === i);
                 const isFood = food.x === j && food.y === i;
                 grid.push(
