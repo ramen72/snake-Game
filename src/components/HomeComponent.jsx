@@ -34,7 +34,7 @@ const HomeComponent = () => {
 const moveSnake = ()=>{
     if(gameOver) return;
 
-    const head = {...snake[0]};
+    const head = { ...snake[0] };
 
     switch (direction) {
         case "UP":
@@ -44,10 +44,10 @@ const moveSnake = ()=>{
             head.y++;
             break;
         case "LEFT":
-            head.X--;
+            head.x--;
             break;
         case "RIGHT":
-            head.X++;
+            head.x++;
             break;        
         default:
             break;
@@ -59,17 +59,18 @@ const moveSnake = ()=>{
         head.y >= GRID_SIZE ||
         snake.some((item)=>item.x === head.x && item.y === head.y)
     ){
-            // setGameOver(true);
+            setGameOver(true);
             return;
     }
 
-    const newSnake = [head, ...snake];
+    const newSnake = [head, ...snake]; 
     if(head.x === food.x && head.y === food.y){
         setScore(score + 1);
         setFood(generateFood());
     }else{
         newSnake.pop();
     }
+    setSnake(newSnake)
 }
 
 useEffect(()=>{
@@ -99,11 +100,11 @@ useEffect(()=>{
 },[direction])
 
 useEffect(() => {
-    const gameLoop = setInterval(moveSnake, 100)
+    const gameLoop = setInterval(moveSnake, 300)
     return () => {
         clearInterval(gameLoop);
     };
-},[snake, food, direction, gameOver])
+},[snake, direction, gameOver])
 
 const renderGrid = () => {
     const grid = [];
@@ -121,6 +122,14 @@ const renderGrid = () => {
     return grid;
 }
 
+let resetGame = () => {
+    setSnake(INITIAL_SNAKE)
+    setFood(INITIAL_FOOD)
+    setDirection(INITIAL_DIRECTION)
+    setScore(0)
+    setGameOver(false)
+}
+
 // 01:00:00
 
 
@@ -128,7 +137,7 @@ const renderGrid = () => {
         <>
             <div className="game-container">
                 <div className="score">Score: 5</div>
-                <div className="game-board" style={{ gridTemplateColumns: `repeat(${GRID_SIZE}, ${CELL_SIZE}px)`, width: `${GRID_SIZE * CELL_SIZE}px`, height: `${GRID_SIZE * CELL_SIZE}px`}}>
+                <div className="game-board overflow-hidden rounded-md" style={{ gridTemplateColumns: `repeat(${GRID_SIZE}, ${CELL_SIZE}px)`, width: `${GRID_SIZE * CELL_SIZE + 6}px`, height: `${GRID_SIZE * CELL_SIZE  + 5}px`}}>
                     {
                         renderGrid()
                     }
@@ -137,8 +146,8 @@ const renderGrid = () => {
                     gameOver ?
                     <div className="game-over">
                         <h2 className='font-bold text-3xl capitalize'>Game Over</h2>
-                        <p>Your Score: 5</p>
-                        <button className='restart-button'>Restart</button>
+                        <p>Your Score: {score}</p>
+                        <button className='restart-button' onClick={()=>resetGame()}>Restart</button>
                     </div>
                     : ""
                 }
