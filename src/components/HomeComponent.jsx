@@ -6,7 +6,7 @@ const HomeComponent = () => {
     const CELL_SIZE = 20;
     const INITIAL_SNAKE = [
         {
-            x : 1,
+            x : 10,
             y : 10
         }
     ];
@@ -50,8 +50,6 @@ const HomeComponent = () => {
                 break;
             case "RIGHT":
                 head.x++;
-                break;        
-            default:
                 break;
         }
 
@@ -75,7 +73,6 @@ const HomeComponent = () => {
             }else{
                 setSpeed( speed - score)
             }
-            console.log(speed)
             setFood(generateFood());
         }else{
             newSnake.pop();
@@ -85,6 +82,8 @@ const HomeComponent = () => {
 
     useEffect(()=>{
         const handleKeyPress = (e) => {
+            console.log(e.key)
+            console.log(direction)
             switch (e.key) {
                 case "ArrowUp":
                     if( direction !== "DOWN") setDirection("UP")
@@ -98,14 +97,12 @@ const HomeComponent = () => {
                 case "ArrowRight":
                     if( direction !== "LEFT") setDirection("RIGHT")
                     break;
-                default:
-                    break;
             }
-            console.log(speed)
+            console.log(direction)
         }
         window.addEventListener("keydown",handleKeyPress)
         return () => {
-            window.removeEventListener("keyup",handleKeyPress)
+            window.removeEventListener("keydown",handleKeyPress)
         };
     },[direction])
 
