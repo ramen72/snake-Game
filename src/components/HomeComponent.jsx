@@ -17,6 +17,8 @@ const HomeComponent = () => {
         }
     ;
     const INITIAL_DIRECTION = 'RIGHT';
+
+
     const [ snake, setSnake] = useState(INITIAL_SNAKE);
     const [ food, setFood] = useState(INITIAL_FOOD);
     const [ direction, setDirection] = useState(INITIAL_DIRECTION);
@@ -85,6 +87,8 @@ const HomeComponent = () => {
 
     useEffect(()=>{
         const handleKeyPress = (e) => {
+            console.log(e.key);
+            
             switch (e.key) {
                 case "ArrowUp":
                     if( direction !== "DOWN") setDirection("UP")
@@ -101,7 +105,7 @@ const HomeComponent = () => {
                 default:
                     break;
             }
-            console.log(speed)
+            console.log(direction)
         }
         window.addEventListener("keydown",handleKeyPress)
         return () => {
