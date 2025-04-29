@@ -6,7 +6,7 @@ const HomeComponent = () => {
     const CELL_SIZE = 20;
     const INITIAL_SNAKE = [
         {
-            x : 1,
+            x : 10,
             y : 10
         }
     ];
@@ -52,8 +52,6 @@ const HomeComponent = () => {
                 break;
             case "RIGHT":
                 head.x++;
-                break;        
-            default:
                 break;
         }
 
@@ -75,9 +73,8 @@ const HomeComponent = () => {
             }else if( speed <= 40){
                 setSpeed( 40)
             }else{
-                setSpeed( speed - score)
+                setSpeed( speed - 1)
             }
-            console.log(speed)
             setFood(generateFood());
         }else{
             newSnake.pop();
@@ -102,14 +99,12 @@ const HomeComponent = () => {
                 case "ArrowRight":
                     if( direction !== "LEFT") setDirection("RIGHT")
                     break;
-                default:
-                    break;
             }
             console.log(direction)
         }
         window.addEventListener("keydown",handleKeyPress)
         return () => {
-            window.removeEventListener("keyup",handleKeyPress)
+            window.removeEventListener("keydown",handleKeyPress)
         };
     },[direction])
 
