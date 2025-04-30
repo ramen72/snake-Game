@@ -32,6 +32,7 @@ const HomeComponent = () => {
             x : Math.floor(Math.random() * GRID_SIZE),
             y : Math.floor(Math.random() * GRID_SIZE),
         }
+        console.log(snake, newFood)
         return snake.some((item) => item.x === newFood.x && item.y === newFood.y) ? generateFood() : newFood;
     }
 
