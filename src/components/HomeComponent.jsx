@@ -85,8 +85,6 @@ const HomeComponent = () => {
 
     useEffect(()=>{
         const handleKeyPress = (e) => {
-            console.log(e.key);
-            
             switch (e.key) {
                 case "ArrowUp":
                     if( direction !== "DOWN") setDirection("UP")
@@ -101,7 +99,6 @@ const HomeComponent = () => {
                     if( direction !== "LEFT") setDirection("RIGHT")
                     break;
             }
-            console.log(direction)
         }
         window.addEventListener("keydown",handleKeyPress)
         return () => {
